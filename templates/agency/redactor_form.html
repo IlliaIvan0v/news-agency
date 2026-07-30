@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}{% if form.instance.pk %}Edit editor{% else %}Add editor{% endif %} — News Agency{% endblock %}
+{% block main_class %}is-narrow{% endblock %}
+{% block eyebrow %}Team{% endblock %}
+{% block heading %}{% if form.instance.pk %}{{ form.instance.get_full_name|default:form.instance.username }}{% else %}Add an editor{% endif %}{% endblock %}
+
+{% block content %}
+  <section class="card">
+    <div class="card-body">
+      <form class="form" method="post" novalidate>
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+          <ul class="messages">
+            {% for error in form.non_field_errors %}<li class="msg msg-err" role="alert">{{ error }}</li>{% endfor %}
+          </ul>
+        {% endif %}
+        {% for field in form %}
+          {% include "includes/_field.html" with field=field %}
+        {% endfor %}
+
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">Save editor</button>
+          {% if form.instance.pk %}
+            <a class="btn btn-ghost" href="{{ form.instance.get_absolute_url }}">Cancel</a>
+          {% else %}
+            <a class="btn btn-ghost" href="{% url 'agency:redactor-list' %}">Cancel</a>
+          {% endif %}
+        </div>
+      </form>
+    </div>
+  </section>
+{% endblock %}

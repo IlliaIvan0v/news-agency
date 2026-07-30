@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}{% if form.instance.pk %}Edit topic{% else %}New topic{% endif %} — News Agency{% endblock %}
+{% block main_class %}is-narrow{% endblock %}
+{% block eyebrow %}Taxonomy{% endblock %}
+{% block heading %}{% if form.instance.pk %}Edit “{{ form.instance.name }}”{% else %}New topic{% endif %}{% endblock %}
+
+{% block content %}
+  <section class="card">
+    <div class="card-body">
+      <form class="form" method="post" novalidate>
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+          <ul class="messages">
+            {% for error in form.non_field_errors %}<li class="msg msg-err" role="alert">{{ error }}</li>{% endfor %}
+          </ul>
+        {% endif %}
+
+        {% include "includes/_field.html" with field=form.name %}
+
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">Save topic</button>
+          <a class="btn btn-ghost" href="{% url 'agency:topic-list' %}">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </section>
+{% endblock %}

@@ -1,0 +1,26 @@
+<aside class="rail">
+    <div class="rail-block">
+      <p class="rail-title">Topics</p>
+      <ul class="rail-list">
+        {% for topic in nav_topics %}
+          <li>
+            <a
+              class="{% if topic.pk|stringformat:'s' in selected_topic_ids %}is-active{% endif %}"
+              href="{% url 'agency:newspaper-list' %}?topic={{ topic.pk }}"
+            >
+              {{ topic.name }}
+              <span>{{ topic.newspaper_count }}</span>
+            </a>
+          </li>
+        {% empty %}
+          <li>
+            <a href="{% url 'agency:topic-create' %}">
+              Add the first topic
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    {% block rail_extra %}{% endblock %}
+  </aside>

@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Editors — News Agency{% endblock %}
+{% block eyebrow %}Team{% endblock %}
+{% block heading %}Editors{% endblock %}
+
+{% block page_actions %}
+  {% if user.is_superuser %}
+    <a class="btn btn-primary" href="{% url 'agency:redactor-create' %}">Add an editor</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  <section class="card">
+    <form class="toolbar" method="get" role="search">
+      <div class="toolbar-row">
+        <div class="field">
+          <label class="field-label" for="{{ search_form.query.id_for_label }}">
+            Search by username
+          </label>
+          {{ search_form.query }}
+        </div>
+
+        <button class="btn btn-primary" type="submit">Apply</button>
+
+        {% if search_query %}
+          <a class="btn btn-ghost" href="{% url 'agency:redactor-list' %}">
+            Reset
+          </a>
+        {% endif %}
+      </div>
+    </form>
+
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Editor</th>
+            <th scope="col">Username</th>
+            <th scope="col" class="t-num">Experience</th>
+            <th scope="col" class="t-num">Issues</th>
+            <th scope="col" class="t-actions">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for redactor in redactor_list %}
+            <tr>
+              <td>
+                <a href="{{ redactor.get_absolute_url }}">{{ redactor.get_full_name|default:redactor.username }}</a>
+                {% if redactor == user %}<span class="chip chip-count">you</span>{% endif %}
+              </td>
+              <td class="muted">{{ redactor.username }}</td>
+              <td class="t-num">
+                {% if redactor.years_of_experience %}
+                  {{ redactor.years_of_experience }} year{{ redactor.years_of_experience|pluralize }}
+                {% else %}
+                  No experience
+                {% endif %}
+              </td>
+              <td class="t-num">{{ redactor.newspaper_count }}</td>
+              <td class="t-actions">
+                {% if user.is_superuser or user.pk == redactor.pk %}
+                  <a class="btn btn-ghost btn-sm" href="{% url 'agency:redactor-update' redactor.pk %}">Edit</a>
+                  <a class="btn btn-danger btn-sm" href="{% url 'agency:redactor-delete' redactor.pk %}">Delete</a>
+                {% endif %}
+              </td>
+            </tr>
+          {% empty %}
+            <tr><td colspan="5">
+              <div class="empty">
+                <p>No editors match this search.</p>
+                {% if user.is_superuser %}
+                  <a class="btn btn-primary" href="{% url 'agency:redactor-create' %}">Add an editor</a>
+                {% endif %}
+
+              </div>
+            </td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    {% include "includes/_pagination.html" %}
+  </section>
+{% endblock %}

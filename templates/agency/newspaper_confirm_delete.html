@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Delete issue — News Agency{% endblock %}
+{% block main_class %}is-narrow{% endblock %}
+{% block eyebrow %}Delete{% endblock %}
+{% block heading %}Delete “{{ newspaper.title }}”?{% endblock %}
+
+{% block content %}
+  <section class="card">
+    <div class="card-body">
+      <p>Published {{ newspaper.publish_date|date:"j F Y" }}.
+         Its links to {{ newspaper.topics.count }} topic{{ newspaper.topics.count|pluralize }}
+         and {{ newspaper.publishers.count }} editor{{ newspaper.publishers.count|pluralize }}
+         go with it. This cannot be undone.</p>
+
+      <dl class="spec">
+        <dt>Topics</dt>
+        <dd>{% include "includes/_topic_chips.html" with topics=newspaper.topics.all %}</dd>
+        <dt>Responsible</dt>
+        <dd>{% include "includes/_publishers_cell.html" with publishers=newspaper.publishers.all %}</dd>
+      </dl>
+
+      <form class="form" method="post">
+        {% csrf_token %}
+        <div class="form-actions">
+          <a class="btn btn-ghost" href="{{ newspaper.get_absolute_url }}">Keep it</a>
+          <button class="btn btn-danger" type="submit">Delete issue</button>
+        </div>
+      </form>
+    </div>
+  </section>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — News Agency{% endblock %}
+{% block eyebrow %}Overview for {{ today|date:"j F Y" }}{% endblock %}
+{% block heading %}What is going out and who owns it{% endblock %}
+
+{% block page_actions %}
+  <a class="btn btn-primary" href="{% url 'agency:newspaper-create' %}">New issue</a>
+{% endblock %}
+
+{% block content %}
+  <section class="stat-grid" aria-label="Key numbers">
+    <article class="stat">
+      <span class="stat-label">Issues</span>
+      <strong class="stat-value">{{ num_newspapers }}</strong>
+      <span class="stat-note">published to date</span>
+    </article>
+    <article class="stat">
+      <span class="stat-label">Topics</span>
+      <strong class="stat-value">{{ num_topics }}</strong>
+      <span class="stat-note">in the taxonomy</span>
+    </article>
+    <article class="stat">
+      <span class="stat-label">Editors</span>
+      <strong class="stat-value">{{ num_redactors }}</strong>
+      <span class="stat-note">on the team</span>
+    </article>
+    <article class="stat {% if num_unassigned %}is-flagged{% endif %}">
+      <span class="stat-label">Unassigned</span>
+      <strong class="stat-value">{{ num_unassigned }}</strong>
+      {% if num_unassigned %}
+        <a class="stat-note is-flag" href="{% url 'agency:newspaper-list' %}?unassigned=1">needs an editor</a>
+      {% else %}
+        <span class="stat-note">every issue has an owner</span>
+      {% endif %}
+    </article>
+  </section>
+
+  <section class="card">
+    <div class="card-head">
+      <h2 class="card-title">Latest issues</h2>
+      <a class="card-tool" href="{% url 'agency:newspaper-list' %}">All issues</a>
+    </div>
+    <div class="card-body is-flush">
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col">Topics</th>
+              <th scope="col">Published</th>
+              <th scope="col">Responsible</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for newspaper in latest_newspapers %}
+              <tr>
+                <td><a href="{{ newspaper.get_absolute_url }}">{{ newspaper.title }}</a></td>
+                <td>{% include "includes/_topic_chips.html" with topics=newspaper.topics.all %}</td>
+                <td>{{ newspaper.publish_date|date:"d M Y" }}</td>
+                <td>{% include "includes/_publishers_cell.html" with publishers=newspaper.publishers.all %}</td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="4">
+                  <div class="empty">
+                    <p>No issues yet. Create one and assign the editors responsible for it.</p>
+                    <a class="btn btn-primary" href="{% url 'agency:newspaper-create' %}">Create the first issue</a>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+{% endblock %}

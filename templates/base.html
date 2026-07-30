@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}News Agency{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/theme-daylight.css' %}">
+</head>
+<body class="theme-daylight">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="masthead">
+  <a class="brand" href="{% url 'agency:index' %}">
+    <span class="brand-mark" aria-hidden="true">NA</span>
+    <span class="brand-name">News Agency</span>
+  </a>
+
+  <nav class="nav" aria-label="Main sections">
+    <a
+      class="nav-link {% if section == 'newspapers' %}is-active{% endif %}"
+      href="{% url 'agency:newspaper-list' %}"
+    >
+      Issues
+    </a>
+    <a
+      class="nav-link {% if section == 'topics' %}is-active{% endif %}"
+      href="{% url 'agency:topic-list' %}"
+    >
+      Topics
+    </a>
+    <a
+      class="nav-link {% if section == 'redactors' %}is-active{% endif %}"
+      href="{% url 'agency:redactor-list' %}"
+    >
+      Editors
+    </a>
+  </nav>
+
+  <div class="session">
+       {% if user.is_authenticated %}
+      <a href="{% url 'agency:redactor-detail' user.pk %}">
+        {{ user.get_full_name|default:user.username }}
+      </a>
+
+      <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button class="btn btn-ghost btn-sm" type="submit">
+          Log out
+        </button>
+      </form>
+    {% else %}
+       <a style="color: white" class="btn btn-primary btn-sm" href="{% url 'login' %}">
+        Log in
+      </a>
+
+      <a class="btn btn-ghost btn-sm" href="{% url 'signup' %}">
+        Sign up
+      </a>
+    {% endif %}
+  </div>
+</header>
+
+<div class="page-layout{% if not user.is_authenticated %} page-layout--single{% endif %}">
+  {% if user.is_authenticated %}
+    <aside class="sidebar">
+      {% include "includes/_sidebar.html" %}
+    </aside>
+  {% endif %}
+
+  <main class="main {% block main_class %}{% endblock %}" id="main">
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li
+            class="msg {% if message.tags == 'error' %}msg-err{% elif message.tags == 'warning' %}msg-warn{% endif %}"
+          >
+            {{ message }}
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <div class="page-head">
+      <div>
+        <p class="eyebrow">
+          {% block eyebrow %}Editor desk{% endblock %}
+        </p>
+        <h1 class="page-title">
+          {% block heading %}{% endblock %}
+        </h1>
+      </div>
+
+      <div class="page-actions">
+        {% block page_actions %}{% endblock %}
+      </div>
+    </div>
+
+    {% block content %}{% endblock %}
+  </main>
+</div>
+
+<footer class="foot">
+  <span>News Agency — internal issue tracking</span>
+</footer>
+</body>
+</html>

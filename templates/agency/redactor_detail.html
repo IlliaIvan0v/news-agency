@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}{{ redactor.get_full_name|default:redactor.username }} — News Agency{% endblock %}
+{% block eyebrow %}Editor{% endblock %}
+{% block heading %}{{ redactor.get_full_name|default:redactor.username }}{% endblock %}
+
+{% block page_actions %}
+  {% if user.is_superuser or user.pk == redactor.pk %}
+    <a class="btn btn-ghost" href="{% url 'agency:redactor-update-experience' redactor.pk %}">Update experience</a>
+    <a class="btn btn-ghost" href="{% url 'agency:redactor-update' redactor.pk %}">Edit profile</a>
+  {% endif %}
+
+{% endblock %}
+
+{% block content %}
+  <section class="stat-grid" aria-label="Editor summary">
+    <article class="stat">
+      <span class="stat-label">Experience</span>
+      <strong class="stat-value">{{ redactor.years_of_experience|default_if_none:0 }}</strong>
+      <span class="stat-note">year{{ redactor.years_of_experience|pluralize }} in the profession</span>
+    </article>
+    <article class="stat">
+      <span class="stat-label">Issues owned</span>
+      <strong class="stat-value">{{ newspapers.count }}</strong>
+      <span class="stat-note">as a responsible editor</span>
+    </article>
+    <article class="stat">
+      <span class="stat-label">Username</span>
+      <strong class="stat-value is-text">{{ redactor.username }}</strong>
+      <span class="stat-note">{{ redactor.email|default:"no email on file" }}</span>
+    </article>
+  </section>
+
+  <section class="card">
+    <div class="card-head">
+      <h2 class="card-title">Issues this editor is responsible for</h2>
+      <span class="card-tool">{{ newspapers.count }} total</span>
+    </div>
+    <div class="card-body is-flush">
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col">Topics</th>
+              <th scope="col">Published</th>
+              <th scope="col" class="t-num">Co-editors</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for newspaper in newspapers %}
+              <tr>
+                <td><a href="{{ newspaper.get_absolute_url }}">{{ newspaper.title }}</a></td>
+                <td>{% include "includes/_topic_chips.html" with topics=newspaper.topics.all %}</td>
+                <td>{{ newspaper.publish_date|date:"d M Y" }}</td>
+                <td class="t-num">{{ newspaper.publishers.count|add:"-1" }}</td>
+              </tr>
+            {% empty %}
+              <tr><td colspan="4">
+                <div class="empty">
+                  <p>No issue is assigned to this editor yet.</p>
+                  <a class="btn btn-ghost" href="{% url 'agency:newspaper-list' %}?unassigned=1">See unassigned issues</a>
+                </div>
+              </td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+{% endblock %}
