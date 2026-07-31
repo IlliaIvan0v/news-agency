@@ -15,7 +15,9 @@
   {% if not newspaper.publishers.exists %}
     <ul class="messages">
       <li class="msg msg-warn">No editor is responsible for this issue yet.
-        <a href="{% url 'agency:newspaper-update' newspaper.pk %}">Assign one</a>.</li>
+        {% if user.is_superuser %}
+          <a href="{% url 'agency:newspaper-update' newspaper.pk %}">Assign one</a>.</li>
+        {% endif %}
     </ul>
   {% endif %}
 
@@ -35,7 +37,9 @@
   <section class="card">
     <div class="card-head">
       <h2 class="card-title">Responsible editors</h2>
-      <a class="card-tool" href="{% url 'agency:newspaper-update' newspaper.pk %}">Change the line-up</a>
+        {% if user.is_superuser or user in newspaper.publishers.all %}
+          <a class="card-tool" href="{% url 'agency:newspaper-update' newspaper.pk %}">Change the line-up</a>
+        {% endif %}
     </div>
     <div class="card-body">
       <ul class="people">
@@ -53,7 +57,9 @@
           <li>
             <div class="empty">
               <p>Nobody owns this issue, so questions about it have no address.</p>
-              <a class="btn btn-primary" href="{% url 'agency:newspaper-update' newspaper.pk %}">Assign an editor</a>
+                {% if user.is_superuser %}
+                  <a class="btn btn-primary" href="{% url 'agency:newspaper-update' newspaper.pk %}">Assign an editor</a>
+                {% endif %}
             </div>
           </li>
         {% endfor %}

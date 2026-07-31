@@ -41,6 +41,16 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .shell.is-single {
   grid-template-columns: minmax(0, 1fr);
 }
+
+.shell.is-single .main.is-narrow {
+  width: 100%;
+  max-width: 640px;
+  margin-inline: auto;
+}
+
+.main.is-narrow .card {
+  width: 100%;
+}
 .rail { padding: 24px 20px; display: flex; flex-direction: column; gap: 28px; }
 .rail-block { display: flex; flex-direction: column; gap: 10px; }
 .rail-title { margin: 0; }

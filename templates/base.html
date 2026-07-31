@@ -62,40 +62,25 @@
   </div>
 </header>
 
-<div class="page-layout{% if not user.is_authenticated %} page-layout--single{% endif %}">
+<div class="shell{% if not user.is_authenticated %} is-single{% endif %}">
   {% if user.is_authenticated %}
-    <aside class="sidebar">
+    <aside class="rail">
       {% include "includes/_sidebar.html" %}
     </aside>
   {% endif %}
 
   <main class="main {% block main_class %}{% endblock %}" id="main">
-    {% if messages %}
-      <ul class="messages">
-        {% for message in messages %}
-          <li
-            class="msg {% if message.tags == 'error' %}msg-err{% elif message.tags == 'warning' %}msg-warn{% endif %}"
-          >
-            {{ message }}
-          </li>
-        {% endfor %}
-      </ul>
-    {% endif %}
 
-    <div class="page-head">
+    <header class="page-head">
       <div>
-        <p class="eyebrow">
-          {% block eyebrow %}Editor desk{% endblock %}
-        </p>
-        <h1 class="page-title">
-          {% block heading %}{% endblock %}
-        </h1>
+        {% block eyebrow %}{% endblock %}
+        <h1 class="page-title">{% block heading %}{% endblock %}</h1>
       </div>
 
       <div class="page-actions">
         {% block page_actions %}{% endblock %}
       </div>
-    </div>
+    </header>
 
     {% block content %}{% endblock %}
   </main>

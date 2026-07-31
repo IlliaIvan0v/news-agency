@@ -4,7 +4,16 @@
 {% block heading %}What is going out and who owns it{% endblock %}
 
 {% block page_actions %}
-  <a class="btn btn-primary" href="{% url 'agency:newspaper-create' %}">New issue</a>
+  {% if user.is_authenticated %}
+    <div class="page-actions">
+      <a
+        class="btn btn-primary"
+        href="{% url 'agency:newspaper-create' %}"
+      >
+        New issue
+      </a>
+    </div>
+  {% endif %}
 {% endblock %}
 
 {% block content %}

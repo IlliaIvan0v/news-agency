@@ -4,8 +4,15 @@
 {% block heading %}{{ page_obj.paginator.count }} found{% endblock %}
 
 {% block page_actions %}
-  {% if user.is_superuser %}
-    <a class="btn btn-primary" href="{% url 'agency:newspaper-create' %}">New issue</a>
+  {% if user.is_authenticated %}
+    <div class="page-actions">
+      <a
+        class="btn btn-primary"
+        href="{% url 'agency:newspaper-create' %}"
+      >
+        New issue
+      </a>
+    </div>
   {% endif %}
 
 {% endblock %}
@@ -68,8 +75,10 @@
               <td>{{ newspaper.publish_date|date:"d M Y" }}</td>
               <td>{% include "includes/_publishers_cell.html" with publishers=newspaper.publishers.all %}</td>
               <td class="t-actions">
-                <a class="btn btn-ghost btn-sm" href="{% url 'agency:newspaper-update' newspaper.pk %}">Edit</a>
-                <a class="btn btn-danger btn-sm" href="{% url 'agency:newspaper-delete' newspaper.pk %}">Delete</a>
+                {% if user.is_superuser or user in newspaper.publishers.all %}
+                  <a class="btn btn-ghost btn-sm" href="{% url 'agency:newspaper-update' newspaper.pk %}">Edit</a>
+                  <a class="btn btn-danger btn-sm" href="{% url 'agency:newspaper-delete' newspaper.pk %}">Delete</a>
+                {% endif %}
               </td>
             </tr>
           {% empty %}
