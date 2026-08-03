@@ -23,8 +23,18 @@ from django.urls import path, include
 from agency.views import SignUpView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('agency.urls', namespace='agency')),
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/signup/', SignUpView.as_view(), name='signup'),
+    path("admin/", admin.site.urls),
+    path("", include("agency.urls", namespace="agency")),
+    path("accounts/", include("django.contrib.auth.urls")),
+    path("accounts/signup/", SignUpView.as_view(), name="signup"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += [
+        path("__debug__/", include("debug_toolbar.urls")),
+    ]
+
+    urlpatterns += static(
+        settings.STATIC_URL,
+        document_root=settings.STATIC_ROOT,
+    )

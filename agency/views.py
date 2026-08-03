@@ -37,10 +37,7 @@ class SelfOrSuperuserRequiredMixin(UserPassesTestMixin):
     def test_func(self):
         obj = self.get_object()
 
-        return (
-            self.request.user.is_superuser
-            or obj.pk == self.request.user.pk
-        )
+        return self.request.user.is_superuser or obj.pk == self.request.user.pk
 
 
 class NewspaperOwnerOrSuperuserRequiredMixin(UserPassesTestMixin):
@@ -51,9 +48,7 @@ class NewspaperOwnerOrSuperuserRequiredMixin(UserPassesTestMixin):
 
         return (
             self.request.user.is_superuser
-            or newspaper.publishers.filter(
-                pk=self.request.user.pk
-            ).exists()
+            or newspaper.publishers.filter(pk=self.request.user.pk).exists()
         )
 
 
@@ -70,9 +65,7 @@ class IndexView(
             "num_newspapers": Newspaper.objects.count(),
             "num_topics": Topic.objects.count(),
             "num_redactors": get_user_model().objects.count(),
-            "num_unassigned": Newspaper.objects.filter(
-                publishers__isnull=True
-            ).count(),
+            "num_unassigned": Newspaper.objects.filter(publishers__isnull=True).count(),
             "latest_newspapers": (
                 Newspaper.objects.prefetch_related(
                     "topics",
@@ -159,9 +152,7 @@ class TopicListView(
                     "newspapers",
                     distinct=True,
                 ),
-                last_published=Max(
-                    "newspapers__publish_date"
-                ),
+                last_published=Max("newspapers__publish_date"),
             )
             .order_by("name")
         )
@@ -216,19 +207,13 @@ class NewspaperListView(
         queryset = super().get_queryset()
 
         if title := self.request.GET.get("title"):
-            queryset = queryset.filter(
-                title__icontains=title
-            )
+            queryset = queryset.filter(title__icontains=title)
 
         if topic_ids := self.request.GET.getlist("topic"):
-            queryset = queryset.filter(
-                topics__id__in=topic_ids
-            )
+            queryset = queryset.filter(topics__id__in=topic_ids)
 
         if self.request.GET.get("unassigned"):
-            queryset = queryset.filter(
-                publishers__isnull=True
-            )
+            queryset = queryset.filter(publishers__isnull=True)
 
         return queryset.distinct()
 
@@ -239,9 +224,7 @@ class NewspaperListView(
         params.pop("page", None)
 
         context["section"] = "newspapers"
-        context["selected_topic_ids"] = (
-            self.request.GET.getlist("topic")
-        )
+        context["selected_topic_ids"] = self.request.GET.getlist("topic")
         context["query_string"] = params.urlencode()
 
         return context
@@ -334,11 +317,9 @@ class RedactorDetailView(
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["newspapers"] = (
-            self.object.newspapers.prefetch_related(
-                "topics",
-                "publishers",
-            )
+        context["newspapers"] = self.object.newspapers.prefetch_related(
+            "topics",
+            "publishers",
         )
         return context
 
