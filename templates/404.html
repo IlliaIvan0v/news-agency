@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Page not found — News Agency{% endblock %}
+{% block eyebrow %}Error{% endblock %}
+{% block heading %}This page does not exist{% endblock %}
+
+{% block content %}
+  <div class="notice">
+    <p class="notice-code">404</p>
+    <p>The issue or editor you were looking for may have been deleted, or the link is out of date.</p>
+    <a class="btn btn-primary" href="{% url 'agency:newspaper-list' %}">Go to issues</a>
+  </div>
+{% endblock %}

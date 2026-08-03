@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Delete editor — News Agency{% endblock %}
+{% block main_class %}is-narrow{% endblock %}
+{% block eyebrow %}Delete{% endblock %}
+{% block heading %}Remove {{ redactor.get_full_name|default:redactor.username }}?{% endblock %}
+
+{% block content %}
+  <section class="card">
+    <div class="card-body">
+
+      {% if redactor.newspapers.count %}
+        <p>{{ redactor.newspapers.count }} issue{{ redactor.newspapers.count|pluralize }}
+           list{{ redactor.newspapers.count|pluralize:"s," }} this editor as responsible.
+           Deleting the account unlinks them, and any issue left without an editor
+           moves to the “unassigned” queue.</p>
+      {% else %}
+        <p>This editor owns no issues, so nothing else is affected.</p>
+      {% endif %}
+
+      <dl class="spec">
+        <dt>Username</dt><dd>{{ redactor.username }}</dd>
+        <dt>Experience</dt><dd>{{ redactor.years_of_experience }} year{{ redactor.years_of_experience|pluralize }}</dd>
+        <dt>Email</dt><dd>{{ redactor.email|default:"—" }}</dd>
+      </dl>
+
+      <form class="form" method="post">
+        {% csrf_token %}
+        <div class="form-actions">
+          <a class="btn btn-ghost" href="{{ redactor.get_absolute_url }}">Keep the account</a>
+          <button class="btn btn-danger" type="submit">Delete editor</button>
+        </div>
+      </form>
+    </div>
+  </section>
+{% endblock %}

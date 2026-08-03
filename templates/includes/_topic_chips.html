@@ -1,0 +1,8 @@
+
+<span class="chip-row">
+  {% for topic in topics %}
+    <a class="chip" href="{% url 'agency:newspaper-list' %}?topic={{ topic.pk }}">{{ topic.name }}</a>
+  {% empty %}
+    <span class="chip chip-flag">no topic</span>
+  {% endfor %}
+</span>

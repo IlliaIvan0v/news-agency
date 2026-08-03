@@ -1,0 +1,192 @@
+/* base.css — structural layer.
+   Grids, tables, forms, accessibility. Contains no colours and no fonts:
+   everything visual lives in theme-daylight.css. Keeping them apart means a
+   restyle never touches markup, and markup changes never break the palette. */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; min-height: 100dvh; }
+img { max-width: 100%; display: block; }
+button, input, select, textarea { font: inherit; color: inherit; }
+
+/* --- accessibility ----------------------------------------------------- */
+.skip-link {
+  position: absolute; left: 8px; top: -60px; z-index: 100;
+  padding: 10px 16px; border-radius: 8px; transition: top .15s ease;
+}
+.skip-link:focus { top: 8px; }
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid currentColor; outline-offset: 2px;
+}
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+
+/* --- page frame --------------------------------------------------------- */
+.masthead { display: flex; align-items: center; gap: 24px; padding: 14px 28px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.nav { display: flex; align-items: center; gap: 4px; margin-inline-start: auto; flex-wrap: wrap; }
+.nav-link { display: block; padding: 8px 14px; text-decoration: none; }
+.session { display: flex; align-items: center; gap: 12px; }
+.session form { margin: 0; }
+
+.shell {
+  display: grid;
+  grid-template-columns: 248px minmax(0, 1fr);
+  align-items: start;
+  min-height: calc(100dvh - 140px);
+}
+
+.shell.is-single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.shell.is-single .main.is-narrow {
+  width: 100%;
+  max-width: 640px;
+  margin-inline: auto;
+}
+
+.main.is-narrow .card {
+  width: 100%;
+}
+.rail { padding: 24px 20px; display: flex; flex-direction: column; gap: 28px; }
+.rail-block { display: flex; flex-direction: column; gap: 10px; }
+.rail-title { margin: 0; }
+.rail-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.rail-list a { display: flex; justify-content: space-between; gap: 10px; padding: 7px 10px; text-decoration: none; }
+
+.main { padding: 28px; display: flex; flex-direction: column; gap: 24px; min-width: 0; }
+.main.is-narrow { max-width: 640px; margin: 0 auto; width: 100%; }
+.page-head { display: flex; align-items: flex-end; gap: 20px; flex-wrap: wrap; }
+.page-head > .page-actions { margin-inline-start: auto; display: flex; gap: 10px; flex-wrap: wrap; }
+.eyebrow { margin: 0 0 6px; }
+.page-title { margin: 0; }
+.foot { padding: 20px 28px; display: flex; gap: 16px; flex-wrap: wrap; }
+
+/* --- KPI row ------------------------------------------------------------ */
+.stat-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+.stat { display: flex; flex-direction: column; gap: 6px; padding: 18px 20px; }
+.stat-value { font-variant-numeric: tabular-nums; line-height: 1; }
+.stat-value.is-text { font-size: 20px; line-height: 1.3; }
+
+/* --- card --------------------------------------------------------------- */
+.card { display: flex; flex-direction: column; min-width: 0; }
+.card-head { display: flex; align-items: center; gap: 16px; padding: 16px 20px; }
+.card-title { margin: 0; }
+.card-head > .card-tool { margin-inline-start: auto; }
+.card-body { padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+.card-body.is-flush { padding: 0; }
+.card-body > p { margin: 0; }
+
+/* --- filter bar --------------------------------------------------------- */
+.toolbar { display: flex; flex-direction: column; gap: 14px; padding: 16px 20px; }
+.toolbar-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+.toolbar .field { margin: 0; min-width: 220px; }
+
+/* Topic filter: one checkbox per topic, so several topics can be combined.
+   The native control stays in the DOM for keyboard and screen readers; only
+   its visual box is replaced by the label. */
+.filter-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip-toggle {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 6px 13px; cursor: pointer; user-select: none;
+}
+.chip-toggle input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.chip-toggle .mark {
+  width: 15px; height: 15px; flex: none; display: grid; place-items: center;
+  font-size: 11px; line-height: 1;
+}
+
+/* --- table -------------------------------------------------------------- */
+.table-wrap { overflow-x: auto; }
+.table { width: 100%; border-collapse: collapse; text-align: left; }
+.table th, .table td { padding: 12px 20px; vertical-align: middle; }
+.table th { white-space: nowrap; }
+.t-num { text-align: right; font-variant-numeric: tabular-nums; }
+.t-actions { text-align: right; white-space: nowrap; }
+.t-actions .btn + .btn { margin-inline-start: 6px; }
+
+/* --- chips, people ------------------------------------------------------ */
+.chip-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; text-decoration: none; }
+.people { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.person { display: flex; align-items: center; gap: 10px; padding: 8px 12px; text-decoration: none; }
+.person-avatar {
+  width: 34px; height: 34px; flex: none;
+  display: grid; place-items: center; font-variant-numeric: tabular-nums;
+}
+.person-text { display: flex; flex-direction: column; }
+
+/* Overlapping avatars for the list view: who owns the issue at a glance.
+   Always paired with a text label — the avatars alone are decorative. */
+.stack { display: inline-flex; align-items: center; }
+.stack .person-avatar { width: 28px; height: 28px; margin-inline-start: -9px; }
+.stack .person-avatar:first-child { margin-inline-start: 0; }
+
+/* --- key/value pairs on detail pages ------------------------------------ */
+.spec { margin: 0; display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 10px 24px; }
+.spec dt { margin: 0; }
+.spec dd { margin: 0; }
+
+/* --- buttons ------------------------------------------------------------ */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 40px; padding: 0 18px; cursor: pointer; text-decoration: none;
+  border: 1px solid transparent;
+  transition: background-color .18s ease, color .18s ease, border-color .18s ease;
+}
+.btn-sm { min-height: 32px; padding: 0 12px; }
+.btn[disabled], .btn[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
+
+/* --- forms -------------------------------------------------------------- */
+.form { display: flex; flex-direction: column; gap: 20px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field-label { display: flex; gap: 4px; }
+.field input[type="text"], .field input[type="email"], .field input[type="password"],
+.field input[type="number"], .field input[type="date"], .field select, .field textarea {
+  width: 100%; min-height: 44px; padding: 10px 12px;
+}
+.field textarea { min-height: 180px; resize: vertical; }
+.field select[multiple] { min-height: 150px; padding: 6px; }
+/* CheckboxSelectMultiple renders <ul><li><label><input> — flatten it. */
+.field ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.field ul label { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; cursor: pointer; }
+.field-help, .field-error { margin: 0; }
+.form-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.form-actions .is-push { margin-inline-start: auto; }
+
+/* --- states ------------------------------------------------------------- */
+.messages { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.msg { padding: 12px 16px; }
+.empty { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 40px 20px; }
+.empty p { margin: 0; }
+.pagination { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; padding: 14px 20px; }
+.page-link { display: grid; place-items: center; min-width: 36px; min-height: 36px; padding: 0 10px; text-decoration: none; font-variant-numeric: tabular-nums; }
+
+/* --- issue body --------------------------------------------------------- */
+.article { display: flex; flex-direction: column; gap: 20px; }
+.article-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; margin: 0; padding: 0; list-style: none; }
+.article-body { max-width: 68ch; display: flex; flex-direction: column; gap: 1em; }
+.article-body p { margin: 0; }
+
+/* --- error pages -------------------------------------------------------- */
+.notice { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; padding: 64px 20px; max-width: 60ch; }
+.notice-code { font-variant-numeric: tabular-nums; line-height: 1; margin: 0; }
+.notice p { margin: 0; }
+
+/* --- responsive --------------------------------------------------------- */
+@media (max-width: 900px) {
+  .shell { grid-template-columns: minmax(0, 1fr); }
+  .rail { order: 2; }
+  .masthead { flex-wrap: wrap; padding: 12px 16px; gap: 12px; }
+  .nav { margin-inline-start: 0; width: 100%; overflow-x: auto; }
+  .main { padding: 20px 16px; }
+  .table th, .table td { padding: 12px 14px; }
+  .spec { grid-template-columns: minmax(0, 1fr); gap: 4px 0; }
+  .spec dd { margin-bottom: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}

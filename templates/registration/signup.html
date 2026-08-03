@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Sign up — News Agency{% endblock %}
+{% block main_class %}is-narrow{% endblock %}
+{% block eyebrow %}Account{% endblock %}
+{% block heading %}Create an account{% endblock %}
+
+{% block content %}
+  <section class="card">
+    <div class="card-body">
+      <form class="form" method="post" novalidate>
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+          <ul class="messages">
+            {% for error in form.non_field_errors %}
+              <li class="msg msg-err" role="alert">{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+        {% for field in form %}
+          {% include "includes/_field.html" with field=field %}
+        {% endfor %}
+
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">
+            Sign up
+          </button>
+
+          <a class="btn btn-ghost" href="{% url 'login' %}">
+            Already have an account
+          </a>
+        </div>
+      </form>
+    </div>
+  </section>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}{% if form.instance.pk %}Edit issue{% else %}New issue{% endif %} — News Agency{% endblock %}
+{% block eyebrow %}Issue{% endblock %}
+{% block heading %}{% if form.instance.pk %}{{ form.instance.title }}{% else %}New issue{% endif %}{% endblock %}
+
+{% block content %}
+  <section class="card">
+    <div class="card-body">
+      <form class="form" method="post" novalidate>
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+          <ul class="messages">
+            {% for error in form.non_field_errors %}<li class="msg msg-err" role="alert">{{ error }}</li>{% endfor %}
+          </ul>
+        {% endif %}
+
+        {% include "includes/_field.html" with field=form.title %}
+        {% include "includes/_field.html" with field=form.publish_date %}
+        {% include "includes/_field.html" with field=form.topics %}
+        {% include "includes/_field.html" with field=form.publishers %}
+        {% include "includes/_field.html" with field=form.content %}
+
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">Save issue</button>
+          {% if form.instance.pk %}
+            <a class="btn btn-ghost" href="{{ form.instance.get_absolute_url }}">Cancel</a>
+            <a class="btn btn-danger is-push" href="{% url 'agency:newspaper-delete' form.instance.pk %}">Delete</a>
+          {% else %}
+            <a class="btn btn-ghost" href="{% url 'agency:newspaper-list' %}">Cancel</a>
+          {% endif %}
+        </div>
+      </form>
+    </div>
+  </section>
+{% endblock %}

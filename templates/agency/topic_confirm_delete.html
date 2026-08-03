@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Delete topic — News Agency{% endblock %}
+{% block main_class %}is-narrow{% endblock %}
+{% block eyebrow %}Delete{% endblock %}
+{% block heading %}Delete the topic “{{ topic.name }}”?{% endblock %}
+
+{% block content %}
+  <section class="card">
+    <div class="card-body">
+
+      {% if topic.newspaper_count %}
+        <p>{{ topic.newspaper_count }} issue{{ topic.newspaper_count|pluralize }} carr{{ topic.newspaper_count|pluralize:"ies,y" }} this topic.
+           The issues stay; they simply lose this label. Any issue left with no topic at all
+           will show up as “no topic”.</p>
+      {% else %}
+        <p>No issue uses this topic, so nothing else changes.</p>
+      {% endif %}
+
+      <form class="form" method="post">
+        {% csrf_token %}
+        <div class="form-actions">
+          <a class="btn btn-ghost" href="{% url 'agency:topic-list' %}">Keep it</a>
+          <button class="btn btn-danger" type="submit">Delete topic</button>
+        </div>
+      </form>
+    </div>
+  </section>
+{% endblock %}

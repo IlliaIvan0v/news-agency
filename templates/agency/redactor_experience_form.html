@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Update experience — News Agency{% endblock %}
+{% block main_class %}is-narrow{% endblock %}
+{% block eyebrow %}Editor{% endblock %}
+{% block heading %}Experience of {{ form.instance.get_full_name|default:form.instance.username }}{% endblock %}
+
+{% block content %}
+  <section class="card">
+    <div class="card-body">
+      <form class="form" method="post" novalidate>
+        {% csrf_token %}
+        {% include "includes/_field.html" with field=form.years_of_experience %}
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">Save</button>
+          <a class="btn btn-ghost" href="{{ form.instance.get_absolute_url }}">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </section>
+{% endblock %}
