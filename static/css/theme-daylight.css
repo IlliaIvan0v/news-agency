@@ -1,0 +1,155 @@
+/* theme-daylight.css — the only visual layer.
+   White surfaces on a cool ground, newsprint blue as the single accent,
+   mustard reserved for "needs attention". Deliberately light-only: the app is
+   an office tool used in daylight, so a second palette would be decoration.
+   Every rule is scoped to .theme-daylight, so specificity always beats base.css. */
+
+.theme-daylight {
+  --bg: #F4F5F8;
+  --surface: #FFFFFF;
+  --line: #E2E6EE;
+  --text: #16202E;
+  --muted: #5C6880;          /* grey pulled toward the accent, not neutral */
+  --accent: #1B4DB1;
+  --accent-wash: #EAF0FC;
+  --gold: #C9930A;           /* semantic: unassigned / needs attention */
+  --crit: #C0392B;           /* semantic: destructive */
+  --shadow: 0 1px 2px rgba(16, 32, 64, .06), 0 8px 24px -16px rgba(16, 32, 64, .28);
+  --radius: 10px;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.theme-daylight .skip-link { background: var(--accent); color: #FFF; }
+
+/* --- top bar ------------------------------------------------------------ */
+.theme-daylight .masthead { background: var(--surface); border-bottom: 1px solid var(--line); }
+.theme-daylight .brand-mark {
+  width: 30px; height: 30px; display: grid; place-items: center; border-radius: 8px;
+  background: var(--accent); color: #FFF; font-weight: 700; font-size: 12px;
+}
+.theme-daylight .brand-name { font-size: 16px; font-weight: 650; letter-spacing: -.01em; color: var(--text); }
+.theme-daylight .nav-link { border-radius: 8px; color: var(--muted); font-size: 14px; font-weight: 500; }
+.theme-daylight .nav-link:hover { background: var(--bg); color: var(--text); }
+.theme-daylight .nav-link.is-active { background: var(--accent-wash); color: var(--accent); }
+.theme-daylight .session { font-size: 13px; color: var(--muted); }
+.theme-daylight .session > a { color: var(--accent); }
+
+/* --- side rail ---------------------------------------------------------- */
+.theme-daylight .rail { border-right: 1px solid var(--line); }
+.theme-daylight .rail-title { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.theme-daylight .rail-list a { border-radius: 8px; color: var(--text); font-size: 14px; }
+.theme-daylight .rail-list a:hover { background: var(--surface); box-shadow: var(--shadow); }
+.theme-daylight .rail-list a.is-active { background: var(--accent-wash); color: var(--accent); font-weight: 550; }
+.theme-daylight .rail-list a span { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* --- page heading ------------------------------------------------------- */
+.theme-daylight .eyebrow { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.theme-daylight .page-title { font-size: 28px; font-weight: 680; letter-spacing: -.02em; text-wrap: balance; }
+
+/* --- KPI ---------------------------------------------------------------- */
+.theme-daylight .stat { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+.theme-daylight .stat-label { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.theme-daylight .stat-value { font-size: 36px; font-weight: 700; letter-spacing: -.03em; }
+.theme-daylight .stat-note { font-size: 13px; color: var(--muted); }
+.theme-daylight .stat-note.is-flag { color: var(--gold); font-weight: 550; }
+.theme-daylight .stat.is-flagged { border-color: #E8D5A3; }
+
+/* --- card --------------------------------------------------------------- */
+.theme-daylight .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+.theme-daylight .card-head { border-bottom: 1px solid var(--line); }
+.theme-daylight .card-title { font-size: 16px; font-weight: 650; }
+.theme-daylight .card-tool { font-size: 13px; color: var(--accent); }
+.theme-daylight .card-body > p { color: var(--muted); }
+
+/* --- filters ------------------------------------------------------------ */
+.theme-daylight .toolbar { border-bottom: 1px solid var(--line); background: #FAFBFD; }
+.theme-daylight .chip-toggle {
+  border-radius: 999px; border: 1px solid var(--line); background: var(--surface);
+  font-size: 13px; color: var(--muted);
+  transition: background-color .18s ease, border-color .18s ease, color .18s ease;
+}
+.theme-daylight .chip-toggle:hover { border-color: var(--muted); color: var(--text); }
+.theme-daylight .chip-toggle .mark { border: 1px solid var(--line); border-radius: 4px; background: var(--surface); color: transparent; }
+.theme-daylight .chip-toggle:has(input:checked) { background: var(--accent-wash); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+.theme-daylight .chip-toggle:has(input:checked) .mark { background: var(--accent); border-color: var(--accent); color: #FFF; }
+.theme-daylight .chip-toggle:has(input:focus-visible) { outline: 3px solid var(--accent-wash); outline-offset: 1px; border-color: var(--accent); }
+
+/* --- table -------------------------------------------------------------- */
+.theme-daylight .table { font-size: 14px; }
+.theme-daylight .table th {
+  font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted); font-weight: 600; border-bottom: 1px solid var(--line);
+}
+.theme-daylight .table td { border-bottom: 1px solid var(--line); }
+.theme-daylight .table tbody tr:last-child td { border-bottom: 0; }
+.theme-daylight .table tbody tr:hover { background: #F8FAFF; }
+.theme-daylight .table a { color: var(--text); text-decoration: none; font-weight: 550; }
+.theme-daylight .table a:hover { color: var(--accent); text-decoration: underline; }
+.theme-daylight .table .muted { color: var(--muted); font-size: 13px; }
+
+/* --- chips and people --------------------------------------------------- */
+.theme-daylight .chip { border-radius: 999px; font-size: 12px; background: var(--accent-wash); color: var(--accent); font-weight: 550; }
+.theme-daylight .chip:hover { background: #DDE7FA; }
+.theme-daylight .chip-flag { background: #FBF2DC; color: #8A6407; }   /* unassigned */
+.theme-daylight .chip-count { background: var(--bg); color: var(--muted); }
+
+.theme-daylight .person { background: var(--bg); border-radius: var(--radius); color: var(--text); }
+.theme-daylight .person:hover { background: var(--accent-wash); }
+.theme-daylight .person-avatar { border-radius: 50%; background: var(--accent); color: #FFF; font-size: 12px; font-weight: 600; }
+.theme-daylight .person-meta { font-size: 12px; color: var(--muted); }
+.theme-daylight .stack .person-avatar { box-shadow: 0 0 0 2px var(--surface); font-size: 11px; }
+
+/* --- key/value ---------------------------------------------------------- */
+.theme-daylight .spec dt { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding-top: 2px; }
+.theme-daylight .spec dd { font-size: 15px; }
+
+/* --- buttons ------------------------------------------------------------ */
+.theme-daylight .btn { border-radius: 8px; font-size: 14px; font-weight: 600; }
+.theme-daylight .btn-primary { background: var(--accent); color: #FFF; }
+.theme-daylight .btn-primary:hover { background: #163E90; }
+.theme-daylight .btn-ghost { border-color: var(--line); background: var(--surface); color: var(--text); }
+.theme-daylight .btn-ghost:hover { border-color: var(--muted); }
+.theme-daylight .btn-danger { border-color: #F0C9C4; color: var(--crit); background: var(--surface); }
+.theme-daylight .btn-danger:hover { background: var(--crit); color: #FFF; border-color: var(--crit); }
+
+/* --- forms -------------------------------------------------------------- */
+.theme-daylight .field-label { font-size: 13px; font-weight: 600; color: var(--text); }
+.theme-daylight .field-label .req { color: var(--crit); }
+.theme-daylight .field input, .theme-daylight .field select, .theme-daylight .field textarea {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+}
+.theme-daylight .field input:focus, .theme-daylight .field select:focus, .theme-daylight .field textarea:focus {
+  outline: 3px solid var(--accent-wash); outline-offset: 0; border-color: var(--accent);
+}
+.theme-daylight .field ul label { border: 1px solid var(--line); border-radius: 999px; background: var(--surface); font-size: 13px; }
+.theme-daylight .field ul label:hover { border-color: var(--accent); }
+.theme-daylight .field ul label:has(input:checked) { background: var(--accent-wash); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+.theme-daylight .field-help { font-size: 12px; color: var(--muted); }
+.theme-daylight .field-error { font-size: 12px; color: var(--crit); font-weight: 550; }
+
+/* --- states ------------------------------------------------------------- */
+.theme-daylight .msg { border-radius: 8px; background: var(--accent-wash); color: #123A87; font-size: 14px; }
+.theme-daylight .msg-err { background: #FBEBE9; color: #8E2B1F; }
+.theme-daylight .msg-warn { background: #FBF2DC; color: #7A5806; }
+.theme-daylight .empty { border: 1px dashed var(--line); border-radius: var(--radius); color: var(--muted); }
+.theme-daylight .pagination { border-top: 1px solid var(--line); font-size: 13px; }
+.theme-daylight .page-link { border-radius: 8px; color: var(--muted); }
+.theme-daylight .page-link:hover { background: var(--bg); color: var(--text); }
+.theme-daylight .page-link[aria-current="page"] { background: var(--accent); color: #FFF; font-weight: 600; }
+
+/* --- issue body --------------------------------------------------------- */
+.theme-daylight .article-title { font-size: 30px; margin: 0; font-weight: 700; letter-spacing: -.02em; text-wrap: balance; }
+.theme-daylight .article-meta { font-size: 13px; color: var(--muted); }
+.theme-daylight .article-body { font-size: 16px; line-height: 1.7; }
+
+/* --- error pages -------------------------------------------------------- */
+.theme-daylight .notice-code { font-size: 64px; font-weight: 700; letter-spacing: -.04em; color: var(--accent); }
+.theme-daylight .notice p { color: var(--muted); }
+
+.theme-daylight .foot { border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); }

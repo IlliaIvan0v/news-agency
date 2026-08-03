@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}{{ newspaper.title }} — News Agency{% endblock %}
+{% block eyebrow %}Issue{% endblock %}
+{% block heading %}{{ newspaper.title }}{% endblock %}
+
+{% block page_actions %}
+  {% if user.is_superuser or user in newspaper.publishers.all %}
+    <a class="btn btn-ghost" href="{% url 'agency:newspaper-update' newspaper.pk %}">Edit</a>
+    <a class="btn btn-danger" href="{% url 'agency:newspaper-delete' newspaper.pk %}">Delete</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+
+  {% if not newspaper.publishers.exists %}
+    <ul class="messages">
+      <li class="msg msg-warn">No editor is responsible for this issue yet.
+        {% if user.is_superuser %}
+          <a href="{% url 'agency:newspaper-update' newspaper.pk %}">Assign one</a>.</li>
+        {% endif %}
+    </ul>
+  {% endif %}
+
+  <article class="card">
+    <div class="card-body">
+      <div class="article">
+        <ul class="article-meta">
+          <li>Published {{ newspaper.publish_date|date:"j F Y" }}</li>
+          <li>{% include "includes/_topic_chips.html" with topics=newspaper.topics.all %}</li>
+          <li>{{ newspaper.publishers.count }} responsible</li>
+        </ul>
+        <div class="article-body">{{ newspaper.content|linebreaks }}</div>
+      </div>
+    </div>
+  </article>
+
+  <section class="card">
+    <div class="card-head">
+      <h2 class="card-title">Responsible editors</h2>
+        {% if user.is_superuser or user in newspaper.publishers.all %}
+          <a class="card-tool" href="{% url 'agency:newspaper-update' newspaper.pk %}">Change the line-up</a>
+        {% endif %}
+    </div>
+    <div class="card-body">
+      <ul class="people">
+        {% for redactor in newspaper.publishers.all %}
+          <li>
+            <a class="person" href="{{ redactor.get_absolute_url }}">
+              <span class="person-avatar" aria-hidden="true">{{ redactor.first_name|slice:":1" }}{{ redactor.last_name|slice:":1" }}</span>
+              <span class="person-text">
+                <span class="person-name">{{ redactor.get_full_name|default:redactor.username }}</span>
+                <span class="person-meta">{{ redactor.years_of_experience }} year{{ redactor.years_of_experience|pluralize }} of experience</span>
+              </span>
+            </a>
+          </li>
+        {% empty %}
+          <li>
+            <div class="empty">
+              <p>Nobody owns this issue, so questions about it have no address.</p>
+                {% if user.is_superuser %}
+                  <a class="btn btn-primary" href="{% url 'agency:newspaper-update' newspaper.pk %}">Assign an editor</a>
+                {% endif %}
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+{% endblock %}

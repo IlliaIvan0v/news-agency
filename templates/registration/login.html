@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Log in — News Agency{% endblock %}
+{% block main_class %}is-narrow{% endblock %}
+{% block eyebrow %}Access{% endblock %}
+{% block heading %}Log in{% endblock %}
+
+{% block content %}
+  <section class="card">
+    <div class="card-body">
+      <form class="form" method="post" novalidate>
+        {% csrf_token %}
+
+        {% if form.errors %}
+          <ul class="messages">
+            <li class="msg msg-err" role="alert">That username and password do not match. Check the caps lock and the keyboard layout.</li>
+          </ul>
+        {% endif %}
+
+        {% include "includes/_field.html" with field=form.username %}
+        {% include "includes/_field.html" with field=form.password %}
+
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">Log in</button>
+          <a class="btn btn-ghost" href="{% url 'signup' %}">
+            Sign up
+          </a>
+        </div>
+        <input type="hidden" name="next" value="{{ next }}">
+      </form>
+    </div>
+  </section>
+{% endblock %}

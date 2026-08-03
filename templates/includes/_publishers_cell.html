@@ -1,0 +1,14 @@
+
+{% if publishers %}
+  <span class="stack" aria-hidden="true">
+    {% for redactor in publishers|slice:":3" %}
+      <span class="person-avatar">{{ redactor.first_name|slice:":1" }}{{ redactor.last_name|slice:":1" }}</span>
+    {% endfor %}
+  </span>
+  <span class="muted">
+    {% for redactor in publishers|slice:":2" %}{{ redactor.get_full_name|default:redactor.username }}{% if not forloop.last %}, {% endif %}{% endfor %}
+    {% if publishers|length > 2 %}and {{ publishers|length|add:"-2" }} more{% endif %}
+  </span>
+{% else %}
+  <span class="chip chip-flag">unassigned</span>
+{% endif %}
