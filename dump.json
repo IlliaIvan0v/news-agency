@@ -1,0 +1,21 @@
+[
+{
+    "model": "agency.redactor",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$MqCBUP8U7xLTcZXFynfq7q$DnfyJUNzHHzhFFrB6ngtpEzzZ1AkuW3r62izsntNV9g=",
+        "last_login": "2026-08-03T10:02:30.833Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2026-08-03T09:57:54.527Z",
+        "years_of_experience": null,
+        "groups": [],
+        "user_permissions": []
+    }
+}
+]
