@@ -1,11 +1,8 @@
 from .base import *
 
 
-DEBUG = os.environ.get("DJANGO_DEBUG", "") != "False"
+DEBUG = True
 
-INTERNAL_IPS = [
-    "127.0.0.1",
-]
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost",]
 
