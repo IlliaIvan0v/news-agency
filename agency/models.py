@@ -2,11 +2,12 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.urls import reverse
+from django_ckeditor_5.fields import CKEditor5Field
 
 
 class Newspaper(models.Model):
     title = models.CharField(max_length=256)
-    content = models.TextField()
+    content = CKEditor5Field("Content", config_name="default",)
     publish_date = models.DateTimeField()
     topics = models.ManyToManyField("Topic", related_name="newspapers")
     publishers = models.ManyToManyField(

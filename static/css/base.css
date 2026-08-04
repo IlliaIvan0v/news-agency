@@ -150,9 +150,44 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 .field textarea { min-height: 180px; resize: vertical; }
 .field select[multiple] { min-height: 150px; padding: 6px; }
+/* CKEditor lists must remain normal vertical lists */
+.field .ck-content ul {
+  display: block !important;
+  list-style-type: disc !important;
+  list-style-position: outside;
+  margin: 1em 0;
+  padding-left: 2em;
+}
+
+.field .ck-content ol {
+  display: block !important;
+  list-style-type: decimal !important;
+  list-style-position: outside;
+  margin: 1em 0;
+  padding-left: 2em;
+}
+
+.field .ck-content li {
+  display: list-item !important;
+  margin: 0.25em 0;
+}
 /* CheckboxSelectMultiple renders <ul><li><label><input> — flatten it. */
-.field ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
-.field ul label { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; cursor: pointer; }
+.field > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.field > ul > li > label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
 .field-help, .field-error { margin: 0; }
 .form-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 .form-actions .is-push { margin-inline-start: auto; }

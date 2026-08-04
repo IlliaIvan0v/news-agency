@@ -127,9 +127,9 @@
 .theme-daylight .field input:focus, .theme-daylight .field select:focus, .theme-daylight .field textarea:focus {
   outline: 3px solid var(--accent-wash); outline-offset: 0; border-color: var(--accent);
 }
-.theme-daylight .field ul label { border: 1px solid var(--line); border-radius: 999px; background: var(--surface); font-size: 13px; }
-.theme-daylight .field ul label:hover { border-color: var(--accent); }
-.theme-daylight .field ul label:has(input:checked) { background: var(--accent-wash); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+.theme-daylight .field > ul > li > label { border: 1px solid var(--line); border-radius: 999px; background: var(--surface); font-size: 13px; }
+.theme-daylight .field > ul > li > label:hover { border-color: var(--accent); }
+.theme-daylight .field > ul > li > label:has(input:checked) { background: var(--accent-wash); border-color: var(--accent); color: var(--accent); font-weight: 600; }
 .theme-daylight .field-help { font-size: 12px; color: var(--muted); }
 .theme-daylight .field-error { font-size: 12px; color: var(--crit); font-weight: 550; }
 

@@ -22,12 +22,14 @@ from django.urls import path, include
 
 from agency.views import SignUpView
 
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("agency.urls", namespace="agency")),
     path("accounts/", include("django.contrib.auth.urls")),
     path("accounts/signup/", SignUpView.as_view(), name="signup"),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    path("ckeditor5/", include("django_ckeditor_5.urls")),
+]
 
 if settings.DEBUG:
     urlpatterns += [
@@ -37,4 +39,9 @@ if settings.DEBUG:
     urlpatterns += static(
         settings.STATIC_URL,
         document_root=settings.STATIC_ROOT,
+    )
+
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT,
     )

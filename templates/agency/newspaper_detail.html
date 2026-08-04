@@ -29,7 +29,7 @@
           <li>{% include "includes/_topic_chips.html" with topics=newspaper.topics.all %}</li>
           <li>{{ newspaper.publishers.count }} responsible</li>
         </ul>
-        <div class="article-body">{{ newspaper.content|linebreaks }}</div>
+        <div class="article-body">{{ newspaper.content|safe }}</div>
       </div>
     </div>
   </article>
