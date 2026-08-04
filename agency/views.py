@@ -12,7 +12,7 @@ from agency.forms import (
     RedactorExperienceForm,
     RedactorUpdateForm,
     SearchForm,
-    TopicForm,
+    TopicForm, CustomPasswordChangeForm,
 )
 from agency.models import Newspaper, Topic
 
@@ -124,6 +124,7 @@ class RedactorPasswordChangeView(
     PasswordChangeView,
 ):
     template_name = "registration/password_change_form.html"
+    form_class = CustomPasswordChangeForm
 
     def get_success_url(self):
         return reverse(
