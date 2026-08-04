@@ -357,7 +357,6 @@ class RedactorUpdateExperienceView(
 
 class RedactorDeleteView(
     LoginRequiredMixin,
-    SuperuserRequiredMixin,
     NavTopicsMixin,
     generic.DeleteView,
 ):
