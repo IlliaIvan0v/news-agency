@@ -4,7 +4,7 @@ Internal issue-tracking system for a news agency.
 
 ## Check it out!
 
-[News Agency deployed to Render]([https://your-app.onrender.com](https://news-agency-5h0w.onrender.com))
+[News Agency deployed to Render](https://news-agency-5h0w.onrender.com)
 
 ## Installation
 
