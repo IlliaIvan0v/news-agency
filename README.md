@@ -6,6 +6,14 @@ Internal issue-tracking system for a news agency.
 
 [News Agency deployed to Render](https://news-agency-5h0w.onrender.com)
 
+User:
+  login: test_user
+  password: wHcEsFub6ZE3Pt6
+
+Admin:
+  login: test_admin
+  password: hQQDuuzBkmkKi52
+
 ## Installation
 
 Python 3.11+ must already be installed.
